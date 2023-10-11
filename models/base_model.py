@@ -13,12 +13,20 @@ class BaseModel:
     The BaseModel class of the AirBnB project
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initialises an instance of the class
         """
         self.id = str(uuid4())
         self.created_at = self.updated_at = datetime.now()
+        
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k != "__class__":
+                    if k == "created_at" or k == "updated_at":
+                        setattr(self, k, datetime.fromisoformat(v))
+                    else:
+                        setattr(self, k, v)
 
     def __str__(self):
         """
