@@ -25,13 +25,13 @@ class BaseModel:
             for k, v in kwargs.items():
                 if k != "__class__":
                     if k == "created_at" or k == "updated_at":
-                        setattr(self, k, datetime.fromisoformat(v))    
+                        setattr(self, k, datetime.fromisoformat(v))
                     else:
                         setattr(self, k, v)
 
     def __str__(self):
         """
-        a string representation of an instance
+        A string representation of an instance
         of the class
         """
         cls_name = self.__class__.__name__

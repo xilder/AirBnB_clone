@@ -31,7 +31,7 @@ class TestBaseModel_instances_created(unittest.TestCase):
     def test_base_model_uniq_id_instances(self):
         bm1 = BaseModel()
         bm2 = BaseModel()
-        
+
         self.assertNotEqual(bm1.id, bm2.id)
 
     def test_base_model_created_at_is_datetime(self):
@@ -39,7 +39,7 @@ class TestBaseModel_instances_created(unittest.TestCase):
 
         self.assertEqual(datetime, type(bm.created_at))
 
-    def  test_base_model_updated_at_is_datetime(self):
+    def test_base_model_updated_at_is_datetime(self):
         bm = BaseModel()
 
         self.assertEqual(datetime, type(bm.updated_at))
@@ -49,6 +49,7 @@ class TestBaseModel_instances_created(unittest.TestCase):
 
         bm.save()
         self.assertLess(bm.created_at, bm.updated_at)
+
 
 if __name__ == "__main__":
     unittest.main()
