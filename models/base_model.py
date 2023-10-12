@@ -2,7 +2,6 @@
 
 from datetime import datetime
 from uuid import uuid4
-
 """
 Defines the BaseModel cladd
 """
@@ -17,14 +16,16 @@ class BaseModel:
         """
         Initialises an instance of the class
         """
-        self.id = str(uuid4())
-        self.created_at = self.updated_at = datetime.now()
-        
-        if len(kwargs) != 0:
+        from models import storage
+        if not kwargs:
+            self.id = str(uuid4())
+            self.created_at = self.updated_at = datetime.now()
+            storage.new(self)
+        else:
             for k, v in kwargs.items():
                 if k != "__class__":
                     if k == "created_at" or k == "updated_at":
-                        setattr(self, k, datetime.fromisoformat(v))
+                        setattr(self, k, datetime.fromisoformat(v))    
                     else:
                         setattr(self, k, v)
 
@@ -42,7 +43,9 @@ class BaseModel:
         saves the changes made to an instances with the
         time updated
         """
+        from models import storage
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
