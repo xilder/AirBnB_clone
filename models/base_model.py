@@ -15,12 +15,16 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """
         Initialises an instance of the class
+
+        Args:
+            *args: unused
+            **kwargs (dict): Key/Value pair of attributes
         """
-        from models import storage
-        if not kwargs:
-            self.id = str(uuid4())
-            self.created_at = self.updated_at = datetime.now()
-            storage.new(self)
+        self.id = str(uuid4())
+        self.created_at = self.updated_at = datetime.now()
+        models.storage.new(self)
+        if len(kwargs) == 0:
+            models.storage.new(self)
         else:
             for k, v in kwargs.items():
                 if k != "__class__":
@@ -43,9 +47,8 @@ class BaseModel:
         saves the changes made to an instances with the
         time updated
         """
-        from models import storage
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
