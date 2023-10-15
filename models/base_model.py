@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-
-from datetime import datetime
-from uuid import uuid4
 """
 Defines the BaseModel cladd
 """
+import models
+from datetime import datetime
+from uuid import uuid4
 
 
 class BaseModel:
