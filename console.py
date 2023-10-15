@@ -278,7 +278,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 instance = all_instances[instance]
-                for k, v in dict_vals.items():    
+                for k, v in dict_vals.items():
                     setattr(instance, k, v)
                 instance.save()
 
@@ -340,7 +340,7 @@ class HBNBCommand(cmd.Cmd):
 
         if matches and method_name in ["all", "count"]:
             method_dict[method_name](line)
-        elif method_name in ["show","destroy"]:
+        elif method_name in ["show", "destroy"]:
             try:
                 instance_id = added_args[0]
                 line = f"{line} {instance_id}"
@@ -354,7 +354,6 @@ class HBNBCommand(cmd.Cmd):
                 attr_params = added_args[1]
                 if attr_params[0] != "{":
                     attr_params = attr_params.replace(",", "")
-                    #attr_params = " ".join(attr_params.split(", "))
                     line = f"{line} {instance_id} {attr_params}"
                     method_dict[method_name](line)
                 else:
@@ -366,6 +365,7 @@ class HBNBCommand(cmd.Cmd):
                 method_dict[method_name](line)
         else:
             super().default(line)
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
