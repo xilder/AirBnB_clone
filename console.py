@@ -4,7 +4,8 @@ defines the console for the AirBnB clone
 """
 import cmd
 import json
-from shlex import split
+import re
+from shlex import split as split_line
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -85,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
                 2. validates for the show method
         """
 
-        line_arg = split(line)
+        line_arg = split_line(line)
 
         if flag >= 1 and len(line_arg) == 0:
             print("** class name missing **")
@@ -255,6 +256,116 @@ class HBNBCommand(cmd.Cmd):
         print("This command updates an instance's", end=" ")
         print("attribute with the given value")
 
+    def do_update2(self, line):
+        """
+        Updates an instance based on the class name and id with a given
+        dictionary and saves the changes into the JSON file
+
+        Args:
+            line (str): contains the class and id
+            dict_val (dict): dictionary of values to update the instance
+        """
+
+        new_args = line.split(" {", 1)
+        line_arg = new_args[0]
+        dict_vals = "{" + new_args[1]
+        dict_vals = json.loads(dict_vals)
+        line_arg = self.validate_line(line, 2)
+        if line_arg:
+            all_instances = storage.all()
+            instance = f"{line_arg[0]}.{line_arg[1]}"
+            if instance not in all_instances:
+                print("** no instance found **")
+            else:
+                instance = all_instances[instance]
+                for k, v in dict_vals.items():    
+                    setattr(instance, k, v)
+                instance.save()
+
+    def do_count(self, line):
+        """
+        Prints all string representation of all instances based
+        or not on the class
+        Args:
+            line: if present, orints number of the specified model instances
+                else prints the total number of instances
+        """
+        if line and line not in self.__classes:
+            print("** class doesn't exist **")
+        else:
+            all_instances = storage.all()
+            number_of_instances = 0
+            for v in all_instances.values():
+                if line:
+                    if line == v.to_dict()["__class__"]:
+                        number_of_instances += 1
+                else:
+                    number_of_instances += 1
+            print(number_of_instances)
+
+    def help_count(self):
+        """
+        Help for the count method
+        """
+        print("\nUsage 1: count")
+        print("This prints the numbe of  instances in storage")
+        print("\nUsage 2: count <model_class>")
+        print("This prints the number of instance of the provided", end=" ")
+        print("<model_class>")
+
+    def default(self, line):
+        """
+        Handles commands for the format class.<command>.(<additional args>)
+        and any other default command
+
+        Args:
+            line (str): user input string
+        """
+        method_dict = {
+                "all": self.do_all,
+                "count": self.do_count,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "update": self.do_update
+                }
+        matches = re.match(r"(\w+)\.(\w+)\((.*)\)", line)
+        if matches:
+            class_name = str(matches.group(1))
+            method_name = str(matches.group(2))
+            added_args = str(matches.group(3))
+            added_args = added_args.split(", ", 1)
+            line = f"{class_name}"
+        else:
+            method_name = ""
+
+        if matches and method_name in ["all", "count"]:
+            method_dict[method_name](line)
+        elif method_name in ["show","destroy"]:
+            try:
+                instance_id = added_args[0]
+                line = f"{line} {instance_id}"
+                method_dict[method_name](line)
+            except IndexError:
+                line = ""
+                method_dict[method_name](line)
+        elif method_name == "update":
+            try:
+                instance_id = added_args[0]
+                attr_params = added_args[1]
+                if attr_params[0] != "{":
+                    attr_params = attr_params.replace(",", "")
+                    #attr_params = " ".join(attr_params.split(", "))
+                    line = f"{line} {instance_id} {attr_params}"
+                    method_dict[method_name](line)
+                else:
+                    attr_params = attr_params.replace("\'", "\"")
+                    line = f"{line} {instance_id} {attr_params}"
+                    self.do_update2(line)
+            except IndexError:
+                line = ""
+                method_dict[method_name](line)
+        else:
+            super().default(line)
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
