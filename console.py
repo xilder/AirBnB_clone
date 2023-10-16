@@ -243,6 +243,14 @@ class HBNBCommand(cmd.Cmd):
             else:
                 instance = all_instances[instance]
                 attr, val = line_arg[2], line_arg[3]
+                if attr in ["number_rooms",
+                         "number_bathrooms",
+                         "max_guest",
+                         "price_by_night"]:
+                    val = int(val)
+                elif attr in ["latitude",
+                           "longitude"]:
+                    val = float(val)
                 setattr(instance, attr, val)
                 instance.save()
 
@@ -279,6 +287,14 @@ class HBNBCommand(cmd.Cmd):
             else:
                 instance = all_instances[instance]
                 for k, v in dict_vals.items():
+                    if k in ["number_rooms",
+                             "number_bathrooms",
+                             "max_guest",
+                             "price_by_night"]:
+                        v = int(v)
+                    elif k in ["latitude",
+                               "longitude"]:
+                        v = float(v)
                     setattr(instance, k, v)
                 instance.save()
 
