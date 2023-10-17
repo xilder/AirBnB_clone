@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         Provides help information on the quit command
         """
 
-        print("\nUsage: quit\n")
+        print("Usage: quit")
         print("This command allows you to exit the interpreter", end=" ")
         print("cleanly")
 
@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         Provides help information on the EOF command
         """
 
-        print("\nUsage: EOF\n")
+        print("Usage: EOF")
         print("This command allows you to exit the  interpreter", end=" ")
         print("cleanly by pressing the Ctrl Key + D key")
 
@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         Help for the create command
         """
 
-        print("\nUsage: create <model_class>")
+        print("Usage: create <model_class>")
         print("This command creates an instance of the specified", end=" ")
         print("class and assigns it a unique identifier")
         print("Finally, it prints the instance's id")
@@ -148,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
         Help for the show method
         """
 
-        print("\nUsage: show <model_class> <model_id>")
+        print("Usage: show <model_class> <model_id>")
         print("This command displays the string representation", end=" ")
         print("of an instance if the id provided exists")
 
@@ -178,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
         Help for the destroy method
         """
 
-        print("\nUsage: destroy <model_class> <model_id>")
+        print("Usage: destroy <model_class> <model_id>")
         print("This command deletes an instance based on the", end=" ")
         print("class name and id if they exist in the storage")
 
@@ -212,9 +212,9 @@ class HBNBCommand(cmd.Cmd):
         Help for the all method
         """
 
-        print("\nUsage 1: all")
+        print("Usage 1: all")
         print("This prints all instances in storage")
-        print("\nUsage 2: all <model_class>")
+        print("Usage 2: all <model_class>")
         print("This prints all instances of the provided", end=" ")
         print("<model_class>")
 
@@ -259,7 +259,7 @@ class HBNBCommand(cmd.Cmd):
         Help for the update method
         """
 
-        print("\nUsage: update <model_class>", end=" ")
+        print("Usage: update <model_class>", end=" ")
         print("<model_id> <attribute> <value>")
         print("This command updates an instance's", end=" ")
         print("attribute with the given value")
@@ -323,9 +323,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Help for the count method
         """
-        print("\nUsage 1: count")
+        print("Usage 1: count")
         print("This prints the numbe of  instances in storage")
-        print("\nUsage 2: count <model_class>")
+        print("Usage 2: count <model_class>")
         print("This prints the number of instance of the provided", end=" ")
         print("<model_class>")
 
