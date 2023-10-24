@@ -36,13 +36,13 @@ section.filters button:hover {
 }
 
 .locations h3,
-.amenities h3,{
+.amenities h3 {
 	font-weight: 600;
 	margin-top: 15px;
 }
 
 .locations h4,
-.locations h4 {
+.amenities h4 {
 	font-weight: 400;
 }
 
@@ -63,8 +63,8 @@ section.filters button:hover {
 	list-style-type: none;
 }
 
-.locations:hover > .popover,
-.amenities:hover > .popover {
+.locations:hover .popover,
+.amenities:hover .popover {
 	display: block;
 }
 
@@ -73,16 +73,16 @@ section.filters button:hover {
 	margin-bottom: 5px;
 }
 
-.locations > .popover > li {
+.locations .popover li {
 	margin-bottom: 30px;
 	margin-left: 30px;
 }			
 
-.locations > .popover > li > ul {
+.locations .popover li ul {
 	padding-left: 20px;
 }
 
-.amenities > .popover > li {
+.amenities .popover li {
 	margin-left: 50px;
 	margin-bottom: 10px;
 }
